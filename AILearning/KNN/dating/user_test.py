@@ -5,7 +5,7 @@ import knn
 import matplotlib
 import matplotlib.pyplot as plt
 
-features, labels = dating_data_process.parse_dating_data("../../source_data/KNN/datingTestSet2.txt")
+features, labels = dating_data_process.parse_dating_data("../../../source_data/KNN/datingTestSet2.txt")
 
 features = dating_data_process.norm(features)
 
