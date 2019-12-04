@@ -24,6 +24,30 @@ def get_learning_curve(start_rate, use_rate, model_generator, training_data, tra
     plt.plot([tup[0] for tup in test_accurancies], [tup[1] for tup in test_accurancies])
     plt.show()
 
+def get_learning_curve_regession(start_rate, use_rate, model_generator, training_data, training_values, test_data, test_values, diff_calculator):
+    training_diffs = []
+    test_diffs = []
+    used = start_rate
+    while used <= 1:
+        used_len = int(len(training_data) * used)
+        use_training_data = training_data[0:used_len]
+        use_training_values = training_values[0:used_len]
+        model = model_generator.fit(use_training_data, use_training_values)
+        training_predicts = model.predict(training_data)
+        test_predicts = model.predict(test_data)
+        training_diff = calc_diff(training_predicts, training_values, diff_calculator)
+        test_diff = calc_diff(test_predicts, test_values, diff_calculator)
+        training_diffs.append((used_len, training_diff))
+        test_diffs.append((used_len, test_diff))
+        used += use_rate
+    plt.plot([tup[0] for tup in training_diffs], [tup[1] for tup in training_diffs])
+    plt.plot([tup[0] for tup in test_diffs], [tup[1] for tup in test_diffs])
+    plt.show()
+
+
+def calc_diff(predicts, values, diff_calculator):
+    return diff_calculator(predicts, values)
+
 def calc_accurancy(predicts, labels):
     return len([tup for tup in zip(predicts, labels) if tup[0] == tup[1]]) / len(labels)
 
