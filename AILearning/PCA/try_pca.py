@@ -20,7 +20,7 @@ scaler = preprocessing.MinMaxScaler()
 
 data = scaler.fit_transform(data)
 
-model = PCA(n_components=4)
+model = PCA(n_components=2)
 pca_data = model.fit_transform(data)
 
 print(pca_data)
