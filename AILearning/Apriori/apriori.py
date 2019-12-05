@@ -1,5 +1,6 @@
 # coding: utf-8
 
+
 def createC1(dataSet):
     C1 = []
     for data in dataSet:
@@ -8,6 +9,7 @@ def createC1(dataSet):
                 C1.append([item])
 
     return list(map(frozenset, C1))
+
 
 def scanD(D, Ck, minSupport):
     ssCnt = {}
@@ -18,7 +20,7 @@ def scanD(D, Ck, minSupport):
                     ssCnt[c] += 1
                 else:
                     ssCnt[c] = 1
-    
+
     dataSize = float(len(D))
     supportData = {}
     retList = []
@@ -30,6 +32,7 @@ def scanD(D, Ck, minSupport):
 
     return retList, supportData
 
+
 def aprioriGen(Lk):
     retList = []
     len_lk = len(Lk)
@@ -40,23 +43,26 @@ def aprioriGen(Lk):
                 newData = Lk[i] | set_sub
                 if not newData in retList:
                     retList.append(newData)
-                
+
     return retList
 
-if __name__ == "__main__":
-    origin_data = [[1,2,3],[0,1,2],[1,2],[3,2,0,1]]
-    # origin_data = [[1],[1,2],[3,3,4]]
-    # part_data = createC1(origin_data)
-    # for item in part_data:
-    #     print(item)
-    # retList,_ = scanD(origin_data, part_data, 0.5)
-    # print(retList)
-    data = createC1(origin_data)
-    print(scanD(origin_data, data, 0.1))
-    data = aprioriGen(data)
-    print(scanD(origin_data, data, 0.1))
-    data = aprioriGen(data)
-    print(scanD(origin_data, data, 0.1))
-    data = aprioriGen(data)
-    print(scanD(origin_data, data, 0.1))
 
+def apriori(origin_data, minSupport=0.5):
+    L = []
+    support_data = {}
+    data_k = createC1(origin_data)
+    for i in range(0, len(data_k) - 1):
+        data_k, support_k = scanD(origin_data, data_k, minSupport)
+        if data_k:
+            L.append(data_k)
+        if support_k:
+            support_data.update(support_k)
+        data_k = aprioriGen(data_k)
+    return L, support_data
+
+
+if __name__ == "__main__":
+    origin_data = [[1, 2, 3], [1, 3], [1, 2], [3, 2, 0, 1]]
+    L, support_data = apriori(origin_data, 0.3)
+    print(L)
+    print(support_data)
