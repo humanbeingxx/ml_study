@@ -16,11 +16,8 @@ data = data_loader.load_cluster_data("../../source_data/PCA/secom.data", 590, ' 
 missing_processor = SimpleImputer()
 data = missing_processor.fit_transform(data)
 
-scaler = preprocessing.MinMaxScaler()
-
-data = scaler.fit_transform(data)
-
-model = PCA(n_components=2)
-pca_data = model.fit_transform(data)
+pca = PCA(n_components=3)
+pca_data = pca.fit_transform(data)
 
 print(pca_data)
+print(pca.explained_variance_ratio_)
