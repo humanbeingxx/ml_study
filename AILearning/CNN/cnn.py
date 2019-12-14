@@ -17,8 +17,10 @@ class Net(nn.Module):
 
     def forward(self, x):
         x = F.max_pool2d(F.relu(self.conv1(x)), (2, 2))
+        print(x.size())
         x = F.max_pool2d(F.relu(self.conv2(x)), 2)
-
+        print(x.size())
+        
         x = x.view(-1, self.num_flat_features(x))
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
@@ -40,5 +42,6 @@ if __name__ == "__main__":
     print(out)
     parameters = list(net.parameters())
     print(len(parameters))
-    for i in range(0, len(parameters)):
-        print(parameters[i].size())
+    print(parameters[0])
+    # for i in range(0, len(parameters)):
+    #     print(parameters[i].size())
