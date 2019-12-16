@@ -11,10 +11,10 @@ def generateDiffSet(data):
         start = datetime.now()
         diff = generateDiffSetOneColumn(column)
         print("generateDiffSetOneColumn cost {}, diff size {}".format((datetime.now() - start).seconds, len(diff)))
-        # start = datetime.now()
-        # if diff:
-        #     diff_set.update(diff)
-        # print("update diff cost {}, diff size {}".format((datetime.now() - start).seconds, len(diff)))
+        start = datetime.now()
+        if diff:
+            diff_set.update(diff)
+        print("update diff cost {}, diff size {}".format((datetime.now() - start).seconds, len(diff)))
     return diff_set
 
 
@@ -48,18 +48,18 @@ def generatePair(A, B):
 
 
 if __name__ == "__main__":
-    # for i in range(0, 10):
-    #     data = test_compare.generate_data()
+    for i in range(0, 10):
+        data = test_compare.generate_data()
 
-    #     force_diff = test_compare.force_compare(data)
+        force_diff = test_compare.force_compare(data)
 
-    #     diff_set = generateDiffSet(data)
+        diff_set = generateDiffSet(data)
 
-    #     new_diff = list(diff_set)
-    #     new_diff.sort()
+        new_diff = list(diff_set)
+        new_diff.sort()
 
-    #     if not force_diff == new_diff:
-    #         sys.exit(1)
+        if not force_diff == new_diff:
+            sys.exit(1)
         
     data = test_compare.generate_big_data()
     generateDiffSet(data)
