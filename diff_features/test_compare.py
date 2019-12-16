@@ -8,17 +8,14 @@ from datetime import datetime
 def force_compare(data):
     data_length = len(data)
     ele_length = len(data[0])
-    same_pair = []
+    diff_pair = []
     for i in range(0, data_length):
         for j in range(i + 1, data_length):
-            is_same = True
             for one_pair in zip(data[i], data[j]):
                 if one_pair[0] != 'x' and one_pair[1] != 'x' and one_pair[0] != one_pair[1]:
-                    is_same = False
+                    diff_pair.append((i, j))
                     break
-            if is_same:
-                same_pair.append((i, j))
-    return same_pair
+    return diff_pair
 
 
 def generate_data():
@@ -27,7 +24,7 @@ def generate_data():
     for i in range(0, 10):
         one_data = []
         for i in range(0, 5):
-            randi = random.randint(0, 30)
+            randi = random.randint(0, 20)
             if randi >= 7:
                 one_data.append('x')
             else:
